@@ -19,7 +19,6 @@ package org.apache.commons.fileupload2.core;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.InvalidPathException;
-
 import org.apache.commons.io.input.BoundedInputStream;
 
 /**

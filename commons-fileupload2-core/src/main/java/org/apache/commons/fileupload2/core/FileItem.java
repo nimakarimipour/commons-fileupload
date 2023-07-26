@@ -16,6 +16,7 @@
  */
 package org.apache.commons.fileupload2.core;
 
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -175,6 +176,6 @@ public interface FileItem<F extends FileItem<F>> extends FileItemHeadersProvider
      * @throws IOException if an error occurs.
      * @return this
      */
-    F write(Path file) throws IOException;
+    F write(@RUntainted Path file) throws IOException;
 
 }

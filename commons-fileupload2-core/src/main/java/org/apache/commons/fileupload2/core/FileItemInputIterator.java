@@ -17,9 +17,7 @@
 package org.apache.commons.fileupload2.core;
 
 import java.io.IOException;
-
 import javax.naming.SizeLimitExceededException;
-
 import org.apache.commons.io.function.IOIterator;
 
 /**

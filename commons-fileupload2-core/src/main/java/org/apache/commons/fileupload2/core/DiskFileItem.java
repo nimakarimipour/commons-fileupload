@@ -16,6 +16,7 @@
  */
 package org.apache.commons.fileupload2.core;
 
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,7 +32,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import org.apache.commons.fileupload2.core.FileItemFactory.AbstractFileItemBuilder;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.build.AbstractOrigin;
@@ -172,7 +172,7 @@ public final class DiskFileItem implements FileItem<DiskFileItem> {
      *
      * @return A String with the non-random looking instance identifier.
      */
-    private static String getUniqueId() {
+    private static @RUntainted String getUniqueId() {
         final var limit = 100_000_000;
         final var current = COUNTER.getAndIncrement();
         var id = Integer.toString(current);
@@ -213,12 +213,12 @@ public final class DiskFileItem implements FileItem<DiskFileItem> {
     /**
      * The threshold above which uploads will be stored on disk.
      */
-    private final int threshold;
+    private final @RUntainted int threshold;
 
     /**
      * The directory in which uploaded files will be stored, if stored on disk.
      */
-    private final Path repository;
+    private final @RUntainted Path repository;
 
     /**
      * Cached contents of the file.
@@ -228,12 +228,12 @@ public final class DiskFileItem implements FileItem<DiskFileItem> {
     /**
      * Output stream for this item.
      */
-    private DeferredFileOutputStream dfos;
+    private @RUntainted DeferredFileOutputStream dfos;
 
     /**
      * The temporary file to use.
      */
-    private final Path tempFile;
+    private final @RUntainted Path tempFile;
 
     /**
      * The file items headers.
@@ -257,8 +257,8 @@ public final class DiskFileItem implements FileItem<DiskFileItem> {
      * @param fileItemHeaders The file item headers.
      * @param defaultCharset  The default Charset.
      */
-    private DiskFileItem(final String fieldName, final String contentType, final boolean isFormField, final String fileName, final int threshold,
-            final Path repository, final FileItemHeaders fileItemHeaders, final Charset defaultCharset) {
+    private DiskFileItem(final String fieldName, final String contentType, final boolean isFormField, final String fileName, final @RUntainted int threshold,
+            final @RUntainted Path repository, final FileItemHeaders fileItemHeaders, final Charset defaultCharset) {
         this.fieldName = fieldName;
         this.contentType = contentType;
         this.charsetDefault = defaultCharset;
@@ -468,7 +468,7 @@ public final class DiskFileItem implements FileItem<DiskFileItem> {
      *
      * @return The {@link java.io.File File} to be used for temporary storage.
      */
-    protected Path getTempFile() {
+    protected @RUntainted Path getTempFile() {
         return tempFile;
     }
 
@@ -572,7 +572,7 @@ public final class DiskFileItem implements FileItem<DiskFileItem> {
      * @throws IOException if an error occurs.
      */
     @Override
-    public DiskFileItem write(final Path file) throws IOException {
+    public DiskFileItem write(final @RUntainted Path file) throws IOException {
         if (isInMemory()) {
             try (var fout = Files.newOutputStream(file)) {
                 fout.write(get());

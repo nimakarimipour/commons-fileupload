@@ -18,7 +18,6 @@ package org.apache.commons.fileupload2.core;
 
 import java.nio.charset.Charset;
 import java.nio.file.Path;
-
 import org.apache.commons.io.FileCleaningTracker;
 import org.apache.commons.io.build.AbstractOrigin;
 import org.apache.commons.io.build.AbstractStreamBuilder;
