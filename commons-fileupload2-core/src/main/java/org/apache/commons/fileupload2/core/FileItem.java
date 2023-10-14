@@ -23,6 +23,7 @@ import java.io.UncheckedIOException;
 import java.nio.charset.Charset;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * <p>
@@ -175,6 +176,6 @@ public interface FileItem<F extends FileItem<F>> extends FileItemHeadersProvider
      * @throws IOException if an error occurs.
      * @return this
      */
-    F write(Path file) throws IOException;
+    F write(@RUntainted Path file) throws IOException;
 
 }

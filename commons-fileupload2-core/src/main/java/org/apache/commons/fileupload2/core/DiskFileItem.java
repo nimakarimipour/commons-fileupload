@@ -38,6 +38,7 @@ import org.apache.commons.io.build.AbstractOrigin;
 import org.apache.commons.io.file.PathUtils;
 import org.apache.commons.io.function.Uncheck;
 import org.apache.commons.io.output.DeferredFileOutputStream;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * The default implementation of the {@link FileItem FileItem} interface.
@@ -213,7 +214,7 @@ public final class DiskFileItem implements FileItem<DiskFileItem> {
     /**
      * The threshold above which uploads will be stored on disk.
      */
-    private final int threshold;
+    private final @RUntainted int threshold;
 
     /**
      * The directory in which uploaded files will be stored, if stored on disk.
@@ -228,12 +229,12 @@ public final class DiskFileItem implements FileItem<DiskFileItem> {
     /**
      * Output stream for this item.
      */
-    private DeferredFileOutputStream dfos;
+    private @RUntainted DeferredFileOutputStream dfos;
 
     /**
      * The temporary file to use.
      */
-    private final Path tempFile;
+    private final @RUntainted Path tempFile;
 
     /**
      * The file items headers.
@@ -257,7 +258,7 @@ public final class DiskFileItem implements FileItem<DiskFileItem> {
      * @param fileItemHeaders The file item headers.
      * @param defaultCharset  The default Charset.
      */
-    private DiskFileItem(final String fieldName, final String contentType, final boolean isFormField, final String fileName, final int threshold,
+    private DiskFileItem(final String fieldName, final String contentType, final boolean isFormField, final String fileName, final @RUntainted int threshold,
             final Path repository, final FileItemHeaders fileItemHeaders, final Charset defaultCharset) {
         this.fieldName = fieldName;
         this.contentType = contentType;
@@ -468,7 +469,7 @@ public final class DiskFileItem implements FileItem<DiskFileItem> {
      *
      * @return The {@link java.io.File File} to be used for temporary storage.
      */
-    protected Path getTempFile() {
+    protected @RUntainted Path getTempFile() {
         return tempFile;
     }
 
@@ -572,7 +573,7 @@ public final class DiskFileItem implements FileItem<DiskFileItem> {
      * @throws IOException if an error occurs.
      */
     @Override
-    public DiskFileItem write(final Path file) throws IOException {
+    public DiskFileItem write(final @RUntainted Path file) throws IOException {
         if (isInMemory()) {
             try (var fout = Files.newOutputStream(file)) {
                 fout.write(get());
